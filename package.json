@@ -1,0 +1,44 @@
+{
+  "name": "virtual-teaching-assistant",
+  "version": "1.0.0",
+  "description": "A comprehensive full-stack web application that provides an interactive learning environment for programming with AI-powered assistance.",
+  "main": "index.js",
+  "scripts": {
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "cd backend && npm run dev",
+    "start:frontend": "cd frontend && npm start",
+    "build": "cd frontend && npm run build",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm start",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": [
+    "education",
+    "programming",
+    "code-editor",
+    "ai",
+    "teaching-assistant",
+    "react",
+    "express",
+    "openai"
+  ],
+  "author": "Virtual Teaching Assistant Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/virtual-teaching-assistant.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/virtual-teaching-assistant/issues"
+  },
+  "homepage": "https://github.com/your-username/virtual-teaching-assistant#readme"
+} 
