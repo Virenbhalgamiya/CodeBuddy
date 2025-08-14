@@ -7,6 +7,36 @@ const ResultBox = ({
   isLoadingExplanation, 
   errorExplanation 
 }) => {
+  const sanitizeText = (text) => {
+    if (!text) return '';
+    let t = text.replace(/[’']/g, "'");
+    t = t.replace(/\blet's break (this )?it down:?\s*/gi, '');
+    t = t.replace(/\blet's break (it|this)?\s*down\b[:,-]*\s*/gi, '');
+    t = t.replace(/\blet's break down\b[:,-]*\s*/gi, '');
+    t = t.replace(/\bin summary,?\s*/gi, '');
+    t = t.replace(/\*\*[^*]+:\*\*\s*/g, '');
+    return t;
+  };
+
+  const toBulletItems = (text) => {
+    if (!text) return [];
+    const raw = sanitizeText(text.trim());
+    let lines = raw.split(/\r?\n/).filter(Boolean);
+    let bullets = lines.filter((l) => l.trim().startsWith('- ')).map((l) => l.replace(/^\s*-\s*/, ''));
+    if (bullets.length === 0) {
+      bullets = raw
+        .replace(/\n+/g, ' ')
+        .split(/(?<=[.!?])\s+/)
+        .filter(Boolean)
+        .slice(0, 5);
+    }
+    bullets = bullets
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0)
+      .map((s) => (s.length > 120 ? s.slice(0, 117) + '…' : s));
+    return bullets.slice(0, 5);
+  };
+
   if (!result) {
     return (
       <div className="border border-gray-300 rounded-lg bg-white p-6">
@@ -118,7 +148,15 @@ const ResultBox = ({
                 Conceptual Guidance
               </h3>
               <div className="text-sm text-primary-800 prose prose-sm max-w-none">
-                <p className="whitespace-pre-wrap">{errorExplanation}</p>
+                {toBulletItems(errorExplanation).length > 0 ? (
+                  <ul className="list-disc pl-5 space-y-1">
+                    {toBulletItems(errorExplanation).map((item, idx) => (
+                      <li key={idx}>{item}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="whitespace-pre-wrap">{sanitizeText(errorExplanation)}</p>
+                )}
               </div>
             </div>
           </div>

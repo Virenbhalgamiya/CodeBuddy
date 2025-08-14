@@ -1,4 +1,4 @@
-# Virtual Teaching Assistant - CodeBuddy Module
+# Virtual Teaching Assistant
 
 A comprehensive full-stack web application that provides an interactive learning environment for programming with AI-powered assistance.
 
